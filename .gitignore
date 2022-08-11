@@ -1,0 +1,10 @@
+# enviroments
+backend/env
+backend/venv
+
+#logs
+backend/logs
+
+# other
+*.env
+__pycache__
