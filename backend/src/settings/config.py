@@ -27,13 +27,13 @@ class Config(BaseSettings):
             TEMPLATE_FOLDER="src/templates",
         )
 
-
-def setup_redis():
-    return Redis(
-        host="localhost",
-        port=6379,
-        db=0,
-    )
+    @property
+    def setup_redis(self) -> Redis:
+        return Redis(
+            host="localhost",
+            port=6379,
+            db=0,
+        )
 
 
 config = Config()

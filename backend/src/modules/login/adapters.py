@@ -1,4 +1,4 @@
-from src.settings.config import config, setup_redis
+from src.settings.config import config
 from fastapi_mail import FastMail, MessageSchema
 from fastapi import BackgroundTasks
 from dataclasses import dataclass
@@ -48,7 +48,7 @@ class MailSenderAdapter(MailSenderPort):
         )
 
 class RedisAdapter(RedisPort):
-    def __init__(self, redis = setup_redis()):
+    def __init__(self, redis = config.setup_redis):
         self.redis = redis
 
     def add(self, key, value):
