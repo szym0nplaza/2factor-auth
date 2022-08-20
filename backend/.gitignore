@@ -1,0 +1,11 @@
+# enviroments
+env
+venv
+
+#logs
+logs
+
+# other
+*.env
+__pycache__
+.mypy_cache

@@ -1,20 +1,27 @@
 from typing import Optional
 from fastapi import FastAPI, Request, Cookie, BackgroundTasks
+from fastapi.middleware.cors import CORSMiddleware
 from src.modules.login.services import LoginService, OTPService
-from src.modules.login.adapters import UserDBAdapter, MailSenderAdapter, RedisAdapter
+from src.modules.login.adapters import UserDBAdapter, MailSenderAdapter, RedisAdapter, User
 import uvicorn
 
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.post("/api/login")
-async def login(request: Request, bg_tasks: BackgroundTasks):
+async def login(user: User, bg_tasks: BackgroundTasks):
     service = LoginService(
         mailer=MailSenderAdapter(), db=UserDBAdapter(), redis=RedisAdapter()
     )
-    data = await request.json()
-    return service.handle_login(data, bg_tasks)
+    return service.handle_login(user.__dict__, bg_tasks)
 
 
 @app.post("/api/validate-otp")
