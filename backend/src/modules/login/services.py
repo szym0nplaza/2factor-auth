@@ -15,8 +15,8 @@ class LoginService:
         self._add_mock_users()
 
     def _add_mock_users(self) -> None:
-        self.db.insert_user(config.mail_from, "zaq1@WSX")
-        self.db.insert_user("test2@mail.com", "123$%^QWE")
+        self.db.insert_user({"email": config.mail_from, "password": "zaq1@WSX", "otp": True})
+        self.db.insert_user({"email": "test2@mail.com", "password":"123$%^QWE", "otp": False})
 
     def _generate_otp(self, email: str) -> int:
         code = random.randint(10000, 99999)
@@ -36,9 +36,10 @@ class LoginService:
         if not user or data.get("password") != user.password:
             return JSONResponse({"message": "Incorrect data."}, status_code=400)
         code = self._generate_otp(user.email)
-        self._send_mail(user.email, code, bg_tasks)
-        response = JSONResponse({"message": "ok"}, status_code=200)
-        response.set_cookie(key="email", value=user.email)
+        if user.otp:
+            self._send_mail(user.email, code, bg_tasks)
+        response = JSONResponse({"message": "ok", "otp": user.otp}, status_code=200)
+        response.set_cookie(key="email", value=user.email, domain="localhost")
         return response
 
 

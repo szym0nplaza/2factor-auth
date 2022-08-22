@@ -12,7 +12,7 @@ const checkToken = () => {
   const handleData = async (url, config) => {
     const response = await fetch(url, config);
     const json = await response.json();
-    return json;
+    return [json, response.status];
   };
   
   export const deleteData = async (url) => {
@@ -36,6 +36,7 @@ const checkToken = () => {
   export const postData = async (url, data) => {
     const tokenData = checkToken();
     return await handleData(url, {
+      credentials: 'include',
       method: "POST",
       headers: {
         "Content-Type": "application/json",

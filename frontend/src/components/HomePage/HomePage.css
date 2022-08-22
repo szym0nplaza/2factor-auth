@@ -1,0 +1,14 @@
+.home-page{
+    padding: 10px;
+    width: 100vw;
+    height: 80vh;
+    gap: 20px;
+}
+
+.success-area{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px
+}

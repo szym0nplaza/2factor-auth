@@ -2,7 +2,7 @@ from src.settings.config import config
 from fastapi_mail import FastMail, MessageSchema
 from fastapi import BackgroundTasks
 from dataclasses import dataclass
-from typing import Dict, Union
+from typing import Dict, Optional, Union
 from .ports import MailSenderPort, UserDBPort, RedisPort
 
 
@@ -10,6 +10,7 @@ from .ports import MailSenderPort, UserDBPort, RedisPort
 class User:
     email: str
     password: str
+    otp: Optional[bool] = False
 
 
 class UserDBAdapter(UserDBPort):
@@ -19,8 +20,8 @@ class UserDBAdapter(UserDBPort):
     def get_user(self, email: str) -> Union[User, None]:
         return self.users.get(email)
 
-    def insert_user(self, email: str, password: str) -> None:
-        self.users[email] = User(email=email, password=password)
+    def insert_user(self, data: dict) -> None:
+        self.users[data.get("email")] = User(**data)
 
 
 class MailSenderAdapter(MailSenderPort):

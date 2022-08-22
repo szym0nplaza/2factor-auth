@@ -26,6 +26,7 @@ async def login(user: User, bg_tasks: BackgroundTasks):
 
 @app.post("/api/validate-otp")
 async def validate_otp(request: Request, email: Optional[str] = Cookie(None)):
+    print(email)
     service = OTPService(redis=RedisAdapter())
     data = await request.json()
     return service.validate_otp(email, data.get("code"))

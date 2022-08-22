@@ -20,7 +20,7 @@ class UserDBPort(ABC):
     def get_user(self, email: str):
         raise NotImplementedError
 
-    def insert_user(self, email: str, password: str):
+    def insert_user(self, data: dict):
         raise NotImplementedError
 
 
