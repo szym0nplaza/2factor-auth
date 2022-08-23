@@ -1,7 +1,7 @@
 from typing import Any
-from src.modules.login.ports import RedisPort
-from src.modules.login.ports import UserDBPort, MailSenderPort
-from src.modules.login.adapters import User
+from modules.login.ports import RedisPort
+from modules.login.ports import UserDBPort, MailSenderPort
+from modules.login.adapters import User
 
 
 class MockMailSenderAdapter(MailSenderPort):

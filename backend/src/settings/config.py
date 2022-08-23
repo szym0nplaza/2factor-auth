@@ -10,6 +10,7 @@ class Config(BaseSettings):
     mail_username: str = Field(env="MAIL_USERNAME")
     mail_password: str = Field(env="MAIL_PASSWORD")
     mail_from: str = Field(env="MAIL_FROM")
+    send_mail: int = Field(env="SEND_MAIL")
     mail_port: int = 587
     mail_server: str = "smtp.gmail.com"
 
@@ -30,7 +31,7 @@ class Config(BaseSettings):
     @property
     def setup_redis(self) -> Redis:
         return Redis(
-            host="localhost",
+            host="redis",
             port=6379,
             db=0,
         )

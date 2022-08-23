@@ -21,7 +21,7 @@ export default function LoginForm() {
     }
 
     const [responseData, status] = await postData(
-      `http://localhost:8888/api/login/`,
+      `http://0.0.0.0:8888/api/login/`,
       {
         email: login,
         password: password,

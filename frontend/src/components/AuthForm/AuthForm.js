@@ -12,7 +12,7 @@ export default function AuthForm() {
   const verifyCode = async (e) => {
     e.preventDefault();
     const [responseData, status] = await postData(
-      "http://localhost:8888/api/validate-otp/",
+      "http://0.0.0.0:8888/api/validate-otp/",
       { code: code }
     );
     setResponse(status);

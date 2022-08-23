@@ -1,6 +1,6 @@
 import ast
 from fastapi import BackgroundTasks
-from src.modules.login.services import LoginService
+from modules.login.services import LoginService
 from .helper_objects import MockMailSenderAdapter, MockUserDBAdapter, RedisMockAdapter
 
 

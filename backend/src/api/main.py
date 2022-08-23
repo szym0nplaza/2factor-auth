@@ -10,7 +10,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["http://0.0.0.0:3000", "http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -26,7 +26,6 @@ async def login(user: User, bg_tasks: BackgroundTasks):
 
 @app.post("/api/validate-otp")
 async def validate_otp(request: Request, email: Optional[str] = Cookie(None)):
-    print(email)
     service = OTPService(redis=RedisAdapter())
     data = await request.json()
     return service.validate_otp(email, data.get("code"))
@@ -35,7 +34,7 @@ async def validate_otp(request: Request, email: Optional[str] = Cookie(None)):
 if __name__ == "__main__":
     uvicorn.run(
         "main:app",
-        host="localhost",
+        host="0.0.0.0",
         log_level="debug",
         reload=True,
         port=8888,

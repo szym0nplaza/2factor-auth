@@ -19,7 +19,7 @@ class LoginService:
         self.db.insert_user({"email": "test2@mail.com", "password":"123$%^QWE", "otp": False})
 
     def _generate_otp(self, email: str) -> int:
-        code = random.randint(10000, 99999)
+        code = random.randint(10000, 99999) if config.send_mail else 11111
         self.redis.add(f"{email}_otp", code)
         return code
 
@@ -36,10 +36,10 @@ class LoginService:
         if not user or data.get("password") != user.password:
             return JSONResponse({"message": "Incorrect data."}, status_code=400)
         code = self._generate_otp(user.email)
-        if user.otp:
+        if user.otp and config.send_mail:
             self._send_mail(user.email, code, bg_tasks)
         response = JSONResponse({"message": "ok", "otp": user.otp}, status_code=200)
-        response.set_cookie(key="email", value=user.email, domain="localhost")
+        response.set_cookie(key="email", value=user.email, domain="0.0.0.0")
         return response
 
 

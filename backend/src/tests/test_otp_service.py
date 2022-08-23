@@ -1,7 +1,7 @@
 import pytest
 import random
 import ast
-from src.modules.login.services import OTPService
+from modules.login.services import OTPService
 from .helper_objects import RedisMockAdapter
 
 
