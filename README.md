@@ -15,7 +15,7 @@ SEND_MAIL=0
 
 Start docker on your machine and in main directory run `docker-compose up --build`.
 
-# Users
+## Users
 
 If you configured everything properly you should be able to login with 2 accounts.
 First account with OTP enabled is 
