@@ -4,6 +4,7 @@ from redis import Redis
 
 
 class Config(BaseSettings):
+    """Base config class"""
     class Config:
         env_file = ".env"
 

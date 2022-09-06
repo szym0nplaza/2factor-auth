@@ -15,6 +15,7 @@ class User:
 
 class UserDBAdapter(UserDBPort):
     """Helper class for mock users"""
+
     users: Dict[str, User] = dict()
 
     def get_user(self, email: str) -> Union[User, None]:
@@ -44,12 +45,17 @@ class MailSenderAdapter(MailSenderPort):
         )
 
         fm = FastMail(config.mail_config)
+
+        # Send mail in background to prevent lag
         background_tasks.add_task(
             fm.send_message, message=message, template_name="mail-template.html"
         )
 
+
 class RedisAdapter(RedisPort):
-    def __init__(self, redis = config.setup_redis):
+    """Class for redis cache management"""
+
+    def __init__(self, redis=config.setup_redis):
         self.redis = redis
 
     def add(self, key, value):

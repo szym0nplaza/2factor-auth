@@ -2,7 +2,12 @@ from typing import Optional
 from fastapi import FastAPI, Request, Cookie, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from src.modules.login.services import LoginService, OTPService
-from src.modules.login.adapters import UserDBAdapter, MailSenderAdapter, RedisAdapter, User
+from src.modules.login.adapters import (
+    UserDBAdapter,
+    MailSenderAdapter,
+    RedisAdapter,
+    User,
+)
 import uvicorn
 
 
@@ -16,8 +21,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.post("/api/login")
 async def login(user: User, bg_tasks: BackgroundTasks):
+    # Use dependency injection for proper application work
     service = LoginService(
         mailer=MailSenderAdapter(), db=UserDBAdapter(), redis=RedisAdapter()
     )
