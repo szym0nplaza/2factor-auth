@@ -2,7 +2,7 @@
 
 ## .env example
 
-Please create `backend/.env` file and pass all data listed below there. They are needed for proper application work. If you want to test it with email sender (WORKS ONLY WITH GMAIL) set `SEND_EMAIL=1` and ensure that your gmail account is set up with 3rd party applications.
+Please create `backend/.env` file and pass all data listed below there. They are needed for proper application work. If you want to test it with email sender (WORKS ONLY WITH GMAIL) set `SEND_EMAIL=1` and ensure that your gmail account is set up with 3rd party applications (if you don't want to receive email you can provide any mock email).
 
 ```
 MAIL_USERNAME=<your-email-for-testing>
@@ -15,7 +15,9 @@ SEND_MAIL=0
 
 Start docker on your machine and in main directory run `docker-compose up --build`.
 
-# Users
+Page should be available on `http://0.0.0.0:3000/`
+
+## Users
 
 If you configured everything properly you should be able to login with 2 accounts.
 First account with OTP enabled is 
@@ -32,3 +34,6 @@ To log in into second account (without OTP) use:
 login = test2@mail.com
 password = 123$%^QWE
 ```
+
+
+`Please let me know if there are some bugs or if something doesn't work, I had little time to do it :)`
