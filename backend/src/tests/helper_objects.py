@@ -16,7 +16,7 @@ class MockUserDBAdapter(UserDBPort):
         user = list(filter(lambda x: x.email == email, self.users))[-1]
         return user
 
-    def insert_user(self, email: str, password: str):
+    def insert_user(self, data: dict):
         pass
 
 

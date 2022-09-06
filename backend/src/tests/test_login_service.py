@@ -12,7 +12,12 @@ class TestLoginService:
     def test_login_handler(self):
         request_data = {"email": "test@mail.com", "password": "zaq1@WSX"}
         response = self.service.handle_login(request_data, BackgroundTasks())
-        body = ast.literal_eval(response.body.decode("utf-8"))
+
+        # Here we need to avoid data malformation, because JSONResponse
+        # pars bool data into JS format, so we have to split and drop incorrect
+        # part of repsonse
+        response_str = response.body.decode("utf-8").split(",")[0] + "}"
+        body = ast.literal_eval(response_str)
         assert body.get("message") == "ok"
         assert response.status_code == 200
 
