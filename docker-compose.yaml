@@ -1,6 +1,6 @@
 version: "3.9"
 services:
-  web:
+  app-backend:
     build: ./backend
     container_name: 'backend'
     ports:
@@ -10,7 +10,7 @@ services:
     environment:
       - .env
 
-  movies-app-frontend:
+  app-frontend:
     build: ./frontend
     container_name: 'frontend'
     ports: 
