@@ -9,6 +9,7 @@ export default function LoginForm() {
   const navigate = useNavigate();
   const [login, setLogin] = useState(null);
   const [isLoginValid, setIsLoginValid] = useState(true);
+  const [isPasswordValid, setIsPasswordValid] = useState(true);
   const [password, setPassword] = useState(null);
   const [status, setStatus] = useState(null);
   const [response, setResponse] = useState(null);
@@ -18,6 +19,15 @@ export default function LoginForm() {
     if (!REGEX.test(login)) {
       setIsLoginValid(false);
       return;
+    }else{
+      setIsLoginValid(true);
+    }
+
+    if (!password){
+      setIsPasswordValid(false);
+      return;
+    }else{
+      setIsPasswordValid(true);
     }
 
     const [responseData, status] = await postData(
@@ -57,6 +67,8 @@ export default function LoginForm() {
           label="Login"
         />
         <TextField
+        error={!isPasswordValid}
+        helperText={isPasswordValid ? null : "Fill in password field!"}
           onChange={(e) => {
             setPassword(e.target.value);
           }}

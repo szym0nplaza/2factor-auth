@@ -1,6 +1,11 @@
 from typing import Optional
-from fastapi import FastAPI, Request, Cookie, BackgroundTasks
+from fastapi import FastAPI, Cookie, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
+from src.modules.login.schemas import (
+    LoginResponseSchema,
+    OTPResponseSchema,
+    OTPRequestSchema,
+)
 from src.modules.login.services import LoginService, OTPService
 from src.modules.login.adapters import (
     UserDBAdapter,
@@ -22,7 +27,13 @@ app.add_middleware(
 )
 
 
-@app.post("/api/login")
+@app.post(
+    "/api/login",
+    responses={
+        "200": {"model": LoginResponseSchema},
+        "400": {"model": LoginResponseSchema},
+    },
+)
 async def login(user: User, bg_tasks: BackgroundTasks):
     # Use dependency injection for proper application work
     service = LoginService(
@@ -31,11 +42,13 @@ async def login(user: User, bg_tasks: BackgroundTasks):
     return service.handle_login(user.__dict__, bg_tasks)
 
 
-@app.post("/api/validate-otp")
-async def validate_otp(request: Request, email: Optional[str] = Cookie(None)):
+@app.post("/api/validate-otp", responses={
+        "200": {"model": OTPResponseSchema},
+        "400": {"model": OTPResponseSchema},
+    },)
+async def validate_otp(code: OTPRequestSchema, email: Optional[str] = Cookie(None)):
     service = OTPService(redis=RedisAdapter())
-    data = await request.json()
-    return service.validate_otp(email, data.get("code"))
+    return service.validate_otp(email, code.code)
 
 
 if __name__ == "__main__":

@@ -64,8 +64,7 @@ class OTPService:
         self.redis: RedisPort = redis
 
     def validate_otp(self, email: str, given_code: int) -> JSONResponse:
-        cached_code = self.redis.get(f"{email}_otp")
-
+        cached_code = int(self.redis.get(f"{email}_otp"))
         # Validate OTP code with this from redis
         if given_code == cached_code:
             self.redis.remove(f"{email}_otp")
