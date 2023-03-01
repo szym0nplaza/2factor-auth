@@ -34,6 +34,3 @@ To log in into second account (without OTP) use:
 login = test2@mail.com
 password = 123$%^QWE
 ```
-
-
-`Please let me know if there are some bugs or if something doesn't work, I had little time to do it :)`
